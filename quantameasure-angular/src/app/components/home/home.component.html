@@ -1,0 +1,193 @@
+<div class="page-content">
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        PROFESSIONAL GRADE MEASUREMENT API
+      </div>
+      <h1 class="hero-title">
+        <span class="line1">Measure.</span>
+        <span class="line2">Convert.</span>
+        <span class="line3">Calculate.</span>
+      </h1>
+      <p class="hero-desc">
+        A precision-built measurement system supporting Length, Weight, Volume, and Temperature —
+        with full arithmetic operations, unit conversions, and secure history tracking.
+      </p>
+      <div class="hero-cta">
+        <button class="btn-cta" (click)="goCalc()">Start Measuring →</button>
+        <button class="btn-outline-cta" (click)="scrollTo('features-section')">Explore Features</button>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="demo-card card-main">
+        <div class="demo-label">TEMPERATURE CONVERSION</div>
+        <div class="demo-conversion">
+          <div class="demo-val">
+            <div class="num accent">100</div>
+            <div class="unit">Celsius</div>
+          </div>
+          <div class="demo-arrow">→</div>
+          <div class="demo-val">
+            <div class="num">212</div>
+            <div class="unit">Fahrenheit</div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-card card-mini1">
+        <div class="demo-mini-label">⊕ Length Addition</div>
+        <div class="demo-mini-val">2 ft + 6 in = 2.5 ft</div>
+      </div>
+      <div class="demo-card card-mini2">
+        <div class="demo-mini-label"><span class="dot"></span>Weight Division</div>
+        <div class="demo-mini-val purple">1 kg ÷ 500 g = 2.00×</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS ── -->
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">4</div>
+      <div class="stat-label">Categories</div>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat-item">
+      <div class="stat-num">12+</div>
+      <div class="stat-label">Units</div>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat-item">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Operations</div>
+    </div>
+  </div>
+
+  <!-- ── FEATURES ── -->
+  <section class="section" id="features-section">
+    <div class="section-center">
+      <div class="section-tag">CAPABILITIES</div>
+      <h2 class="section-title">Everything you need for<br><span>precise measurement</span></h2>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card large">
+        <div class="feature-icon blue">⟲</div>
+        <h3 class="feature-title">Unit Conversion</h3>
+        <p class="feature-desc">
+          Convert between any units within a category with full floating-point precision.
+          Feet to inches, kilograms to pounds, litres to gallons, Celsius to Kelvin —
+          all handled via a clean conversion factor architecture.
+        </p>
+        <div class="feature-tags">
+          <span class="tag">12 decimal precision</span>
+          <span class="tag">Bi-directional</span>
+          <span class="tag">Cross-unit</span>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon purple">＋</div>
+        <h3 class="feature-title">Arithmetic Operations</h3>
+        <p class="feature-desc">
+          Add, subtract, and divide quantities across mixed units. Results expressed
+          in your chosen output unit with automatic base conversion.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon green">✓</div>
+        <h3 class="feature-title">Equality Check</h3>
+        <p class="feature-desc">
+          Verify if two measurements are physically equivalent regardless of the units
+          they're expressed in. Epsilon-safe floating point comparison.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon red">▦</div>
+        <h3 class="feature-title">History &amp; Analytics</h3>
+        <p class="feature-desc">
+          Every operation persisted with full operand, result, and timestamp logging.
+          Sign in to query all history and filter by operation type.
+        </p>
+        <div class="feature-tags">
+          <span class="tag">Redis cached</span>
+          <span class="tag">JWT secured</span>
+          <span class="tag">EF Core</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CATEGORIES ── -->
+  <section class="section" id="categories-section" style="padding-top:0">
+    <div class="section-center">
+      <div class="section-tag">CATEGORIES</div>
+      <h2 class="section-title">Four measurement<br><span>domains</span></h2>
+    </div>
+
+    <div class="categories-grid">
+      <div class="cat-card" (click)="goCalc('length')">
+        <div class="cat-icon">📏</div>
+        <div class="cat-name">Length</div>
+        <div class="cat-units">Feet · Inches · Yards · Centimeters</div>
+        <div class="cat-ops">
+          <span class="cat-op">Equality</span>
+          <span class="cat-op">Convert</span>
+          <span class="cat-op">Add</span>
+          <span class="cat-op">Subtract</span>
+          <span class="cat-op">Divide</span>
+        </div>
+      </div>
+
+      <div class="cat-card" (click)="goCalc('weight')">
+        <div class="cat-icon">⚖️</div>
+        <div class="cat-name">Weight</div>
+        <div class="cat-units">Kilogram · Gram · Pound</div>
+        <div class="cat-ops">
+          <span class="cat-op">Equality</span>
+          <span class="cat-op">Convert</span>
+          <span class="cat-op">Add</span>
+          <span class="cat-op">Subtract</span>
+          <span class="cat-op">Divide</span>
+        </div>
+      </div>
+
+      <div class="cat-card" (click)="goCalc('volume')">
+        <div class="cat-icon">🧪</div>
+        <div class="cat-name">Volume</div>
+        <div class="cat-units">Litre · Millilitre · Gallon</div>
+        <div class="cat-ops">
+          <span class="cat-op">Equality</span>
+          <span class="cat-op">Convert</span>
+          <span class="cat-op">Add</span>
+          <span class="cat-op">Subtract</span>
+          <span class="cat-op">Divide</span>
+        </div>
+      </div>
+
+      <div class="cat-card temp" (click)="goCalc('temperature')">
+        <div class="cat-icon">🌡️</div>
+        <div class="cat-name">Temperature</div>
+        <div class="cat-units">Celsius · Fahrenheit · Kelvin</div>
+        <div class="cat-ops">
+          <span class="cat-op">Equality</span>
+          <span class="cat-op">Convert</span>
+          <span class="cat-op restricted">No Arithmetic*</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="cat-note">
+      * Temperature arithmetic is intentionally restricted — temperature scales are not linearly additive.
+    </p>
+  </section>
+
+</div>

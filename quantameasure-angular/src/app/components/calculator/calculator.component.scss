@@ -1,0 +1,163 @@
+.calc-header {
+  padding: 40px 80px 0;
+}
+.back-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: none; border: none; color: var(--muted);
+  cursor: pointer; font-size: 0.85rem; margin-bottom: 12px;
+  font-family: var(--font-body); text-decoration: none;
+  transition: color 0.2s;
+  &:hover { color: var(--text); }
+}
+.calc-header h1 { font-family: var(--font-display); font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+.calc-header p { color: var(--muted); font-size: 0.9rem; }
+
+.calc-body {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 24px;
+  padding: 32px 80px;
+}
+
+/* ── SIDEBAR ── */
+.cat-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cat-sidebar-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px; border-radius: 12px; cursor: pointer;
+  border: 1px solid transparent; transition: all 0.2s var(--transition);
+  font-size: 0.9rem; font-weight: 500; color: var(--text);
+  &:hover { background: var(--surface); border-color: var(--border); }
+  &.selected {
+    background: rgba(56,189,248,0.08);
+    border-color: rgba(56,189,248,0.25);
+    color: var(--accent);
+    .cat-sidebar-icon { border-color: rgba(56,189,248,0.3); }
+  }
+}
+.cat-sidebar-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--bg2); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+
+/* ── PANEL ── */
+.calc-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px;
+  min-height: 500px;
+}
+.calc-panel-title { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; margin-bottom: 6px; }
+.calc-panel-sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 28px; }
+
+/* ── OP TABS ── */
+.op-tabs { display: flex; gap: 6px; margin-bottom: 28px; flex-wrap: wrap; }
+.op-tab {
+  padding: 8px 16px; border-radius: 8px; font-size: 0.82rem; font-weight: 500;
+  background: none; border: 1px solid var(--border); color: var(--muted);
+  cursor: pointer; transition: all 0.2s; font-family: var(--font-body);
+  &:hover:not(:disabled) { border-color: rgba(56,189,248,0.3); color: var(--text); }
+  &.active { background: rgba(56,189,248,0.12); border-color: var(--accent); color: var(--accent); }
+  &:disabled { opacity: 0.35; cursor: not-allowed; }
+}
+
+/* ── INPUTS ── */
+.calc-inputs { display: flex; flex-direction: column; gap: 16px; }
+.input-row {
+  display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap;
+  &.swap-row { align-items: flex-end; }
+}
+.input-group { flex: 1; min-width: 100px; }
+.input-label {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em;
+  color: var(--muted); text-transform: uppercase; margin-bottom: 8px; display: block;
+}
+.calc-input {
+  width: 100%; padding: 14px 16px; border-radius: 12px;
+  background: var(--bg2); border: 1px solid var(--border);
+  color: var(--text); font-size: 1.1rem; font-family: var(--font-mono);
+  outline: none; transition: all 0.2s;
+  &:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(56,189,248,0.1); }
+}
+.unit-select {
+  width: 100%; padding: 14px 14px; border-radius: 12px;
+  background: var(--bg2); border: 1px solid var(--border);
+  color: var(--text); font-size: 0.9rem; outline: none; cursor: pointer;
+  font-family: var(--font-body); transition: all 0.2s;
+  &:focus { border-color: var(--accent); }
+}
+.op-symbol {
+  font-family: var(--font-display); font-size: 1.6rem; font-weight: 800;
+  color: var(--accent); padding: 0 4px; line-height: 1; padding-bottom: 14px;
+  flex-shrink: 0;
+}
+.swap-btn {
+  padding: 12px 14px; border-radius: 10px;
+  background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.2);
+  color: var(--accent); cursor: pointer; font-size: 1.1rem;
+  transition: all 0.3s; align-self: flex-end; flex-shrink: 0;
+  &:hover { background: rgba(56,189,248,0.2); transform: rotate(180deg); }
+}
+
+/* ── BUTTON ── */
+.calc-btn {
+  margin-top: 20px; width: 100%; padding: 16px;
+  border-radius: 12px; font-size: 1rem; font-weight: 600;
+  background: var(--accent); border: none; color: #000; cursor: pointer;
+  font-family: var(--font-body); transition: all 0.25s var(--transition);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  &:hover:not(:disabled) {
+    background: #7dd3fc; transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(56,189,248,0.3);
+  }
+  &:disabled { opacity: 0.7; cursor: not-allowed; }
+}
+.spinner {
+  width: 18px; height: 18px; border: 2px solid rgba(0,0,0,0.2);
+  border-top-color: #000; border-radius: 50%;
+  animation: spin 0.7s linear infinite; display: inline-block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── RESULT ── */
+.result-display {
+  margin-top: 24px; padding: 24px;
+  background: var(--bg2); border-radius: 14px;
+  border: 1px solid var(--border);
+  animation: slideUp 0.4s var(--transition);
+  &.equal   { border-color: rgba(52,211,153,0.4); }
+  &.notequal { border-color: rgba(248,113,113,0.4); }
+}
+.result-label {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
+  color: var(--muted); text-transform: uppercase; margin-bottom: 12px;
+}
+.result-value {
+  font-family: var(--font-display); font-size: 2.5rem; font-weight: 800;
+  color: var(--accent); line-height: 1;
+}
+.result-equation { font-size: 0.85rem; color: var(--muted); margin-top: 10px; font-family: var(--font-mono); }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .calc-body { grid-template-columns: 1fr; padding: 24px 40px; }
+  .cat-sidebar { flex-direction: row; flex-wrap: wrap; }
+  .cat-sidebar-item { flex: 1; min-width: 120px; justify-content: center; }
+}
+@media (max-width: 768px) {
+  .calc-header { padding: 24px 24px 0; }
+  .calc-body { padding: 20px 24px; }
+  .input-row { flex-direction: column; }
+  .op-symbol { padding-bottom: 0; align-self: center; }
+}

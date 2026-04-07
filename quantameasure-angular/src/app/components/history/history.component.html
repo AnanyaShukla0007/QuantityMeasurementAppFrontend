@@ -1,0 +1,201 @@
+<div class="page-content">
+
+  <!-- HEADER -->
+  <div class="history-header">
+    <a class="back-btn" routerLink="/">← Back to Home</a>
+    <h1>Operation History</h1>
+    <p>All your measurement operations, logged and searchable.</p>
+  </div>
+
+  <div class="history-body">
+
+    <!-- AUTH WALL -->
+    @if (!auth.isLoggedIn()) {
+      <div class="auth-wall">
+        <div class="auth-wall-icon">🔐</div>
+
+        <h2>Sign in to view history</h2>
+
+        <p>
+          Your calculation history is securely stored. Sign in or create an account
+          to access all past operations.
+        </p>
+
+        <div class="auth-tabs">
+          <button
+            class="auth-tab"
+            [class.active]="authMode === 'signin'"
+            (click)="switchMode('signin')">
+            Sign In
+          </button>
+
+          <button
+            class="auth-tab"
+            [class.active]="authMode === 'signup'"
+            (click)="switchMode('signup')">
+            Sign Up
+          </button>
+        </div>
+
+        <div class="auth-form">
+
+          <input
+            class="auth-input"
+            type="text"
+            placeholder="Username"
+            [(ngModel)]="formUsername"
+          />
+
+          <input
+            class="auth-input"
+            type="password"
+            placeholder="Password"
+            [(ngModel)]="formPassword"
+            (keyup.enter)="handleAuth()"
+          />
+
+          @if (formError) {
+            <span class="auth-error">{{ formError }}</span>
+          }
+
+          <button
+            class="auth-submit"
+            (click)="handleAuth()"
+            [disabled]="authLoading">
+            @if (authLoading) {
+              <span class="spinner-dark"></span>
+            } @else {
+              {{ authMode === 'signin' ? 'Sign In' : 'Create Account' }}
+            }
+          </button>
+
+          <button
+            class="auth-submit"
+            style="margin-top: 10px; background: #ffffff; color: black;"
+            (click)="loginWithGoogle()">
+            Sign in with Google
+          </button>
+
+        </div>
+      </div>
+    }
+
+    <!-- HISTORY CONTENT -->
+    @if (auth.isLoggedIn()) {
+
+      <div class="history-content">
+
+        <!-- TOP BAR -->
+        <div class="history-top">
+
+          <div class="history-top-left">
+            <h2>Welcome {{ auth.currentUser()?.name }}</h2>
+            <span class="count-badge">{{ totalCount }} ops</span>
+          </div>
+
+          <div class="user-badge">
+            <div class="user-avatar">
+              {{ auth.currentUser()?.name?.charAt(0) }}
+            </div>
+
+            <span class="user-name">
+              {{ auth.currentUser()?.name }}
+            </span>
+
+            <button class="logout-btn" (click)="logout()">Logout</button>
+          </div>
+
+        </div>
+
+        <!-- FILTERS -->
+        <div class="history-filters">
+          @for (f of filters; track f.key) {
+            <button
+              class="filter-btn"
+              [class.active]="activeFilter === f.key"
+              (click)="applyFilter(f.key)">
+              {{ f.label }}
+            </button>
+          }
+
+          <button
+            class="filter-btn errored"
+            [class.active]="showErrored"
+            (click)="loadErrored()">
+            Errors
+          </button>
+        </div>
+
+        <!-- LOADING -->
+        @if (historyLoading) {
+          <div class="loading-state">
+            <div class="loading-spinner"></div>
+            <span>Loading history...</span>
+          </div>
+        }
+
+        <!-- EMPTY -->
+        @if (!historyLoading && filteredHistory.length === 0) {
+          <div class="history-empty">
+            <div class="history-empty-icon">📭</div>
+            <p>No history yet.</p>
+            <p class="empty-sub">Start using the calculator to see results here.</p>
+
+            <button class="btn-cta" (click)="goCalc()">
+              Go to Calculator
+            </button>
+          </div>
+        }
+
+        <!-- LIST -->
+        @if (!historyLoading && filteredHistory.length > 0) {
+
+          <div class="history-list">
+
+            @for (item of filteredHistory; track item.id) {
+
+              <div class="history-item"
+                   [class.errored]="item.errorMessage">
+
+                <div class="history-cat-icon">
+                  {{ getCategoryIcon(item.measurementCategory) }}
+                </div>
+
+                <div class="history-info">
+
+                  <div class="history-eq">
+                    {{ formatEquation(item) }}
+                  </div>
+
+                  <div class="history-meta">
+                    <span class="meta-cat">
+                      {{ item.measurementCategory || 'general' }}
+                    </span>
+                  </div>
+
+                  @if (item.errorMessage) {
+                    <div class="history-err-msg">
+                      {{ item.errorMessage }}
+                    </div>
+                  }
+
+                </div>
+
+                <div class="history-result"
+                     [class.error-result]="item.errorMessage">
+                  {{ formatResult(item) }}
+                </div>
+
+              </div>
+
+            }
+
+          </div>
+
+        }
+
+      </div>
+    }
+
+  </div>
+</div>

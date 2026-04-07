@@ -1,0 +1,41 @@
+# ───────────── Dependencies ─────────────
+node_modules/
+
+# ───────────── Build Output ─────────────
+dist/
+build/
+out-tsc/
+.angular/
+
+# ───────────── Logs ─────────────
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# ───────────── Environment Files ─────────────
+.env
+.env.local
+.env.*.local
+
+# Optional (only if you create local overrides)
+src/environments/*.local.ts
+
+# ───────────── IDE / Editors ─────────────
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ───────────── OS Files ─────────────
+.DS_Store
+Thumbs.db
+
+# ───────────── Cache / Temp ─────────────
+.cache/
+.tmp/
+.temp/
+coverage/
