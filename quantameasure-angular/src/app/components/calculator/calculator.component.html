@@ -1,0 +1,201 @@
+<div class="page-content">
+  <div class="calc-header">
+    <a class="back-btn" routerLink="/">← Back to Home</a>
+    <h1>Measurement Calculator</h1>
+    <p>Select a category and operation to begin</p>
+  </div>
+
+  <div class="calc-body">
+    <!-- ── SIDEBAR ── -->
+    <div class="cat-sidebar">
+      @for (cat of categories; track cat) {
+        <div class="cat-sidebar-item" [class.selected]="selectedCat === cat" (click)="selectCat(cat)">
+          <div class="cat-sidebar-icon">
+            @switch (cat) {
+              @case ('length')      { 📏 }
+              @case ('weight')      { ⚖️ }
+              @case ('volume')      { 🧪 }
+              @case ('temperature') { 🌡️ }
+            }
+          </div>
+          {{ cat | titlecase }}
+        </div>
+      }
+    </div>
+
+    <!-- ── PANEL ── -->
+    <div class="calc-panel">
+      <div class="calc-panel-title">{{ cfg.icon }} {{ cfg.label }}</div>
+      <p class="calc-panel-sub">{{ opDescriptions[selectedOp] }}</p>
+
+      <!-- Op tabs -->
+      <div class="op-tabs">
+        @for (op of allOps; track op) {
+          <button
+            class="op-tab"
+            [class.active]="selectedOp === op"
+            [disabled]="!cfg.ops.includes(op)"
+            [title]="!cfg.ops.includes(op) ? 'Not available for ' + cfg.label : ''"
+            (click)="selectOp(op)">
+            {{ opLabels[op] }}
+          </button>
+        }
+      </div>
+
+      <!-- ── INPUTS ── -->
+      <div class="calc-inputs">
+
+        <!-- Convert -->
+        @if (selectedOp === 'convert') {
+          <div class="input-row swap-row">
+            <div class="input-group">
+              <label class="input-label">Value</label>
+              <input class="calc-input" type="number" [(ngModel)]="val1" placeholder="100">
+            </div>
+            <div class="input-group">
+              <label class="input-label">From</label>
+              <select class="unit-select" [(ngModel)]="unit1">
+                @for (key of unitKeys; track key) {
+                  <option [value]="key">{{ cfg.units[key] }}</option>
+                }
+              </select>
+            </div>
+            <button class="swap-btn" (click)="swapUnits()" title="Swap units">⇄</button>
+            <div class="input-group">
+              <label class="input-label">To</label>
+              <select class="unit-select" [(ngModel)]="unit2">
+                @for (key of unitKeys; track key) {
+                  <option [value]="key">{{ cfg.units[key] }}</option>
+                }
+              </select>
+            </div>
+          </div>
+        }
+
+        <!-- Equals -->
+        @if (selectedOp === 'equals') {
+          <div class="input-row">
+            <div class="input-group">
+              <label class="input-label">Value 1</label>
+              <input class="calc-input" type="number" [(ngModel)]="val1" placeholder="100">
+            </div>
+            <div class="input-group">
+              <label class="input-label">Unit</label>
+              <select class="unit-select" [(ngModel)]="unit1">
+                @for (key of unitKeys; track key) {
+                  <option [value]="key">{{ cfg.units[key] }}</option>
+                }
+              </select>
+            </div>
+          </div>
+          <div class="input-row">
+            <div class="input-group">
+              <label class="input-label">Value 2</label>
+              <input class="calc-input" type="number" [(ngModel)]="val2" placeholder="212">
+            </div>
+            <div class="input-group">
+              <label class="input-label">Unit</label>
+              <select class="unit-select" [(ngModel)]="unit2">
+                @for (key of unitKeys; track key) {
+                  <option [value]="key">{{ cfg.units[key] }}</option>
+                }
+              </select>
+            </div>
+          </div>
+        }
+
+        <!-- Add / Subtract -->
+        @if (selectedOp === 'add' || selectedOp === 'subtract') {
+          <div class="input-row">
+            <div class="input-group">
+              <label class="input-label">Value 1</label>
+              <input class="calc-input" type="number" [(ngModel)]="val1" placeholder="1">
+            </div>
+            <div class="input-group">
+              <label class="input-label">Unit 1</label>
+              <select class="unit-select" [(ngModel)]="unit1">
+                @for (key of unitKeys; track key) {
+                  <option [value]="key">{{ cfg.units[key] }}</option>
+                }
+              </select>
+            </div>
+            <div class="op-symbol">{{ opSymbol }}</div>
+            <div class="input-group">
+              <label class="input-label">Value 2</label>
+              <input class="calc-input" type="number" [(ngModel)]="val2" placeholder="1">
+            </div>
+            <div class="input-group">
+              <label class="input-label">Unit 2</label>
+              <select class="unit-select" [(ngModel)]="unit2">
+                @for (key of unitKeys; track key) {
+                  <option [value]="key">{{ cfg.units[key] }}</option>
+                }
+              </select>
+            </div>
+          </div>
+          <div class="input-row">
+            <div class="input-group">
+              <label class="input-label">Result Unit</label>
+              <select class="unit-select" [(ngModel)]="unitOut">
+                @for (key of unitKeys; track key) {
+                  <option [value]="key">{{ cfg.units[key] }}</option>
+                }
+              </select>
+            </div>
+          </div>
+        }
+
+        <!-- Divide -->
+        @if (selectedOp === 'divide') {
+          <div class="input-row">
+            <div class="input-group">
+              <label class="input-label">Value 1</label>
+              <input class="calc-input" type="number" [(ngModel)]="val1" placeholder="1">
+            </div>
+            <div class="input-group">
+              <label class="input-label">Unit 1</label>
+              <select class="unit-select" [(ngModel)]="unit1">
+                @for (key of unitKeys; track key) {
+                  <option [value]="key">{{ cfg.units[key] }}</option>
+                }
+              </select>
+            </div>
+            <div class="op-symbol">÷</div>
+            <div class="input-group">
+              <label class="input-label">Value 2</label>
+              <input class="calc-input" type="number" [(ngModel)]="val2" placeholder="1">
+            </div>
+            <div class="input-group">
+              <label class="input-label">Unit 2</label>
+              <select class="unit-select" [(ngModel)]="unit2">
+                @for (key of unitKeys; track key) {
+                  <option [value]="key">{{ cfg.units[key] }}</option>
+                }
+              </select>
+            </div>
+          </div>
+        }
+
+      </div>
+
+      <!-- Calculate button -->
+      <button class="calc-btn" (click)="calculate()" [disabled]="loading">
+        @if (loading) {
+          <span class="spinner"></span> Calculating...
+        } @else {
+          <span>Calculate</span> <span>⟶</span>
+        }
+      </button>
+
+      <!-- Result -->
+      @if (result) {
+        <div class="result-display" [class.equal]="result.isEqual === true" [class.notequal]="result.isEqual === false">
+          <div class="result-label">RESULT</div>
+          <div class="result-value">{{ result.value }}</div>
+          <div class="result-equation">{{ result.equation }}</div>
+        </div>
+      }
+
+    </div>
+  </div>
+</div>
