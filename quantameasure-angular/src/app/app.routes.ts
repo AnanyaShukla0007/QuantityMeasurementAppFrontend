@@ -16,11 +16,5 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./components/history/history.component').then(m => m.HistoryComponent)
   },
-  {
-    path: 'google-success',
-    loadComponent: () =>
-      import('./components/google-success/google-success.component')
-        .then(m => m.GoogleSuccessComponent)
-  },
-  { path: '**', redirectTo: '' } // LAST ONLY
+  { path: '**', redirectTo: '' }
 ];

@@ -69,12 +69,6 @@ export class HistoryComponent implements OnInit {
     }
   }
 
-  // 🔴 GOOGLE LOGIN (ADDED — THIS WAS MISSING)
-  loginWithGoogle() {
-    window.location.href = 'https://localhost:5001/api/v1/auth/google-login';
-  }
-
-  // ───────────────── HELPERS ─────────────────
   getCategoryIcon(category?: string): string {
     if (!category) return '📐';
     return this.catIcons[category.toLowerCase()] ?? '📐';
@@ -119,9 +113,7 @@ export class HistoryComponent implements OnInit {
             },
             error: err => {
               this.authLoading = false;
-              this.formError =
-                err?.error?.message ||
-                'Registered, but login failed.';
+              this.formError = err?.error?.message || 'Registered, but login failed.';
             }
           });
         },
@@ -167,7 +159,6 @@ export class HistoryComponent implements OnInit {
       },
       error: err => {
         this.historyLoading = false;
-
         if (err?.status === 401 || err?.status === 403) {
           this.toast.show('Session expired.', 'error');
           this.auth.logout();
@@ -185,9 +176,7 @@ export class HistoryComponent implements OnInit {
   applyFilter(filter: HistoryFilter) {
     this.activeFilter = filter;
     this.showErrored = false;
-
     const valid = this.allHistory.filter(h => !h.errorMessage);
-
     if (filter === 'all') {
       this.filteredHistory = valid;
     } else {
@@ -200,7 +189,6 @@ export class HistoryComponent implements OnInit {
   loadErrored() {
     this.showErrored = true;
     this.historyLoading = true;
-
     this.quantityService.getErroredHistory().subscribe({
       next: data => {
         this.filteredHistory = Array.isArray(data) ? data : [];
@@ -216,10 +204,8 @@ export class HistoryComponent implements OnInit {
   logout() {
     this.auth.logout();
     this.toast.show('Logged out', 'info');
-
     this.allHistory = [];
     this.filteredHistory = [];
-
     this.formUsername = '';
     this.formPassword = '';
     this.authMode = 'signin';
@@ -228,38 +214,24 @@ export class HistoryComponent implements OnInit {
   // ───────────────── FORMATTERS ─────────────────
   formatResult(item: OperationHistory): string {
     if (item.errorMessage) return '✗ Error';
-
     if (item.resultValue !== null && item.resultValue !== undefined) {
       const val = parseFloat(item.resultValue.toFixed(6));
       return item.resultUnit ? `${val} ${item.resultUnit}` : `${val}`;
     }
-
     return '—';
   }
 
   formatEquation(item: OperationHistory): string {
     const u1 = item.operand1Unit || '';
     const v1 = item.operand1Value;
-
     const sym: Record<string, string> = {
-      ADD: '+',
-      SUBTRACT: '−',
-      DIVIDE: '÷',
-      COMPARE: '=?',
-      CONVERT: '→'
+      ADD: '+', SUBTRACT: '−', DIVIDE: '÷', COMPARE: '=?', CONVERT: '→'
     };
-
-    if (
-      item.operand2Value !== undefined &&
-      item.operand2Value !== null &&
-      item.operationType !== 'CONVERT'
-    ) {
+    if (item.operand2Value !== undefined && item.operand2Value !== null && item.operationType !== 'CONVERT') {
       const u2 = item.operand2Unit || '';
       const v2 = item.operand2Value;
-
       return `${v1} ${u1} ${sym[item.operationType] ?? item.operationType} ${v2} ${u2}`;
     }
-
     return `${v1} ${u1} → ${item.resultUnit || ''}`;
   }
 
